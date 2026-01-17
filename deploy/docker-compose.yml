@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  backend:
+    build: ../tx_web_backend  # Trỏ ra ngoài thư mục deploy
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/tx_game
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ../tx_web_frontend
+    ports:
+      - "80:80" # Hoặc 5173 tùy cấu hình nginx/vite
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"

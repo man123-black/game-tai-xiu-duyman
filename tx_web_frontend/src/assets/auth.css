@@ -1,0 +1,74 @@
+/* src/assets/auth.css */
+.auth-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, #2c3e50 0%, #000000 100%);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.auth-box {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 40px;
+    border-radius: 20px;
+    border: 2px solid #ffd700;
+    box-shadow: 0 0 30px #ffd700;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-title {
+    color: #ffd700;
+    font-size: 30px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px #ff00de;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: #222;
+    border: 1px solid #555;
+    color: white;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.auth-input:focus {
+    border-color: #ffd700;
+    outline: none;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(to right, #d9534f, #c9302c);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #d9534f;
+}
+
+.auth-link {
+    margin-top: 20px;
+    color: white;
+    display: block;
+    text-decoration: none;
+}
+.auth-link span {
+    color: #ffd700;
+    font-weight: bold;
+}

@@ -1,0 +1,70 @@
+/* src/components/dice.css */
+.dice-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px 0;
+  perspective: 1000px;
+}
+
+.die {
+  width: 60px;
+  height: 60px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.2), 0 5px 10px rgba(0,0,0,0.3);
+  display: grid;
+  grid-template-areas: 
+      "a . c"
+      "e g f"
+      "d . b";
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.pip {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #333;
+  margin: 2px;
+}
+
+/* Các mặt xúc xắc */
+.die[data-value="1"] { justify-content: center; align-items: center; }
+.die[data-value="1"] .pip { display: none; }
+.die[data-value="1"]::before { content: ''; width: 14px; height: 14px; background: red; border-radius: 50%; }
+
+.die[data-value="2"] .pip:nth-child(n+3) { display: none; }
+.die[data-value="2"] { grid-template-areas: "a . ." ". . ." ". . b"; }
+
+.die[data-value="3"] .pip:nth-child(n+4) { display: none; }
+.die[data-value="3"] { grid-template-areas: "a . ." ". g ." ". . b"; }
+
+.die[data-value="4"] .pip:nth-child(n+5) { display: none; }
+.die[data-value="4"] { grid-template-areas: "a . c" ". . ." "d . b"; }
+
+.die[data-value="5"] .pip:nth-child(n+6) { display: none; }
+.die[data-value="5"] { grid-template-areas: "a . c" ". g ." "d . b"; }
+
+.die[data-value="6"] { grid-template-areas: "a . c" "e . f" "d . b"; }
+
+/* Hiệu ứng rung khi quay */
+.shaking {
+  animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
