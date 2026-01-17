@@ -25,7 +25,7 @@ const Game = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
       try {
-          const res = await fetch("http://localhost:5000/api/users/me", {
+          const res = await fetch("https://game-tai-xiu-duyman.onrender.com/api/users/me", {
               headers: { "Content-Type": "application/json", "Authorization": token }
           });
           if (res.ok) {
