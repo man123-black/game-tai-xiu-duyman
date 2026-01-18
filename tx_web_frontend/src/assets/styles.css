@@ -172,11 +172,38 @@ html, body {
 
 /* KẾT QUẢ */
 .result-floating {
-    position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%);
-    width: 400px; text-align: center;
-    font-size: 36px; font-weight: 900; text-transform: uppercase;
-    z-index: 20; pointer-events: none;
-    filter: drop-shadow(0 0 5px #000);
+    position: absolute; 
+    bottom: -80px;
+    left: 50%; 
+    transform: translateX(-50%);
+    width: 100%; 
+    text-align: center;
+    font-size: 42px; 
+    font-weight: 900; 
+    text-transform: uppercase;
+    z-index: 50; 
+    pointer-events: none;
+    
+    filter: drop-shadow(0 0 15px rgba(0,0,0,1));
+    letter-spacing: 2px;
+    
+    animation: resultEnter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes resultEnter {
+    0% { opacity: 0; transform: translate(-50%, 20px) scale(0.5); }
+    100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+.result-tai {
+    color: #ff4d4d;
+    text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff0000, 0 0 40px #ff0000;
+}
+
+.result-xiu {
+    color: #00ccff;
+    text-shadow: 0 0 10px #00ccff, 0 0 20px #00ccff, 0 0 40px #00ccff;
 }
 
 /* XÚC XẮC */
