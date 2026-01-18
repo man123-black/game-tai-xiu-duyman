@@ -7,20 +7,19 @@ export const register = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // 1. KIỂM TRA TRÙNG TÊN (QUAN TRỌNG)
+    // KIỂM TRA TRÙNG TÊN 
     const existingUser = await User.findOne({ username });
     if (existingUser) {
         return res.status(400).json({ message: "Tên tài khoản này đã có người dùng!" });
     }
 
-    // 2. Mã hóa mật khẩu
+    // Mã hóa mật khẩu
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 3. Tạo user mới (Tặng 5 củ)
     const newUser = await User.create({
       username,
       password: hashedPassword,
-      balance: 5000000 
+      balance: 300000 
     });
 
     res.status(201).json({ message: "Đăng ký thành công!", user: newUser });
@@ -42,7 +41,6 @@ export const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Sai mật khẩu!" });
 
-    // Tạo token
     const token = jwt.sign({ id: user._id }, "secret_key_bi_mat", { expiresIn: "1d" });
 
     res.json({

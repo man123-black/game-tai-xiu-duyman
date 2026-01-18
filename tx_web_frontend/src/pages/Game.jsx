@@ -15,9 +15,9 @@ const Game = () => {
   });
   
   const [myBalance, setMyBalance] = useState(localUser.balance || 0);
-  const [selectedChip, setSelectedChip] = useState(10000);
+  const [selectedChip, setSelectedChip] = useState(1000);
 
-  // --- STATE QUẢN LÝ CƯỢC & HIỆU ỨNG TIỀN ---
+  // QUẢN LÝ CƯỢC 
   const [myBet, setMyBet] = useState({ TAI: 0, XIU: 0 });
   const [resultEffect, setResultEffect] = useState({ TAI: null, XIU: null });
 
@@ -42,22 +42,19 @@ const Game = () => {
     
     socket.on("game-tick", (data) => {
         setGameState(prev => {
-            // Khi sang ván mới -> Reset cược & hiệu ứng
+            
             if (data.status === "BETTING" && prev.status !== "BETTING") {
                 setMyBet({ TAI: 0, XIU: 0 }); 
                 setResultEffect({ TAI: null, XIU: null }); 
             }
 
-            // Khi có kết quả -> Kiểm tra xem có THUA không để hiện dấu TRỪ
             if (prev.status !== "COMPLETED" && data.status === "COMPLETED") {
                 const result = data.result; // "TAI" hoặc "XIU"
                 setResultEffect(prevEffect => {
                     const newEffect = { ...prevEffect };
-                    // Nếu về TÀI mà cược XỈU -> Mất tiền XỈU
                     if (result === "TAI" && myBet.XIU > 0) {
                         newEffect.XIU = { type: 'LOSS', amount: myBet.XIU };
                     }
-                    // Nếu về XỈU mà cược TÀI -> Mất tiền TÀI
                     if (result === "XIU" && myBet.TAI > 0) {
                         newEffect.TAI = { type: 'LOSS', amount: myBet.TAI };
                     }
@@ -70,7 +67,6 @@ const Game = () => {
         });
     });
     
-    // Khi nhận tiền thắng -> Hiện dấu CỘNG
     socket.on("win-money", (data) => {
         playSound("win");
         setMyBalance(prev => prev + data.amount); 
@@ -94,9 +90,8 @@ const Game = () => {
       socket.off("bet-success");
       socket.off("bet-error");
     };
-  }, [myBet]); // myBet thay đổi thì cập nhật logic thua
+  }, [myBet]);
 
-  // Xử lý riêng sự kiện win-money để cập nhật UI chính xác hơn với state result
   useEffect(() => {
      const handleWin = (data) => {
         if (gameState.result) {
@@ -114,7 +109,7 @@ const Game = () => {
       if (gameState.status !== "BETTING") return;
       if (selectedChip > myBalance) return alert("Không đủ tiền!");
       
-      // Lưu lại số tiền mình cược
+      // Lưu lại số tiền cược
       setMyBet(prev => ({
           ...prev,
           [choice]: prev[choice] + selectedChip
@@ -146,7 +141,7 @@ const Game = () => {
       }
   };
 
-  // Logic sáng đèn
+  // Đèn
   const isTaiWin = gameState.status === "COMPLETED" && gameState.result === "TAI";
   const isXiuWin = gameState.status === "COMPLETED" && gameState.result === "XIU";
 
@@ -154,7 +149,7 @@ const Game = () => {
     <div className="game-container">
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 20px', background: 'rgba(0,0,0,0.9)', borderBottom: '1px solid #333', flexShrink: 0, alignItems: 'center' }}>
-        <div className="neon-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>DUYMAN CASINO</div>
+        <div className="neon-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>DUYMAN</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <div className="gold-text" style={{ fontSize: '16px', fontWeight: 'bold' }}>
               👤 {localUser.username} | 💰 {myBalance.toLocaleString()} VNĐ
@@ -169,7 +164,7 @@ const Game = () => {
                 
                 <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center', flex: 1}}>
                     
-                    {/* --- CỬA TÀI --- */}
+                    {/* CỬA TÀI */}
                     <div 
                         className={`bet-box bet-tai ${isTaiWin ? 'winner-box' : ''} ${isXiuWin ? 'loser-box' : ''}`} 
                         onClick={() => handleBet('TAI')}
@@ -178,7 +173,7 @@ const Game = () => {
                         <p>Tổng: {gameState.totalTai.toLocaleString()}</p>
                         {myBet.TAI > 0 && <div style={{fontSize: '12px', color: '#ff0', marginTop: '5px'}}>Cược: {myBet.TAI.toLocaleString()}</div>}
 
-                        {/* HIỆU ỨNG TIỀN BAY (+/-) */}
+                        {/* HIỆU ỨNG TIỀN BAY */}
                         {resultEffect.TAI && (
                             <div className={`money-float ${resultEffect.TAI.type === 'WIN' ? 'float-win' : 'float-loss'}`}>
                                 {resultEffect.TAI.type === 'WIN' ? '+' : '-'}{resultEffect.TAI.amount.toLocaleString()}
@@ -190,7 +185,7 @@ const Game = () => {
                     <div className="center-plate">
                         {renderCenterContent()}
                         
-                        {/* Kết quả chữ (Bay lơ lửng, không đẩy bố cục) */}
+                        {/* Kết quả chữ */}
                         <div className="neon-text" style={{
                             position: 'absolute', bottom: '-60px', left: '50%', transform: 'translateX(-50%)',
                             width: '300px', textAlign: 'center', fontSize: '4vh', fontWeight: 'bold',
@@ -204,7 +199,7 @@ const Game = () => {
                         </div>
                     </div>
 
-                    {/* --- CỬA XỈU --- */}
+                    {/* CỬA XỈU */}
                     <div 
                         className={`bet-box bet-xiu ${isXiuWin ? 'winner-box' : ''} ${isTaiWin ? 'loser-box' : ''}`}
                         onClick={() => handleBet('XIU')}
@@ -213,7 +208,7 @@ const Game = () => {
                         <p>Tổng: {gameState.totalXiu.toLocaleString()}</p>
                         {myBet.XIU > 0 && <div style={{fontSize: '12px', color: '#ff0', marginTop: '5px'}}>Cược: {myBet.XIU.toLocaleString()}</div>}
 
-                        {/* HIỆU ỨNG TIỀN BAY (+/-) */}
+                        {/* HIỆU ỨNG TIỀN BAY */}
                         {resultEffect.XIU && (
                             <div className={`money-float ${resultEffect.XIU.type === 'WIN' ? 'float-win' : 'float-loss'}`}>
                                 {resultEffect.XIU.type === 'WIN' ? '+' : '-'}{resultEffect.XIU.amount.toLocaleString()}

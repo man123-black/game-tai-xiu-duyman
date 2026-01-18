@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import GameRound from "../models/GameRound.js";
 
-// Lưu danh sách người thật
+// Lưu danh sách người chơi
 let currentBets = []; 
 
 let gameState = {
@@ -15,10 +15,10 @@ let gameState = {
     history: []
 };
 
-// Hàm random số tiền thông minh hơn (làm tròn số cho đẹp)
+// Hàm random số tiền :
 const randMoney = (min, max) => {
     const val = Math.floor(Math.random() * (max - min + 1)) + min;
-    // Làm tròn đến hàng trăm nghìn hoặc triệu cho giống người đặt (VD: 1.500.000 thay vì 1.542.123)
+    // Làm tròn đến hàng trăm nghìn
     return Math.floor(val / 100000) * 100000;
 };
 
@@ -34,47 +34,41 @@ export const initGameLoop = async (io) => {
     setInterval(async () => {
         gameState.timeRemaining--;
 
-        // --- LOGIC BOT BƠM TIỀN THÔNG MINH ---
+        // --- LOGIC TĂNG TIỀN ---
         if (gameState.status === "BETTING" && gameState.timeRemaining > 2) {
             
-            // Tùy vào thời gian còn lại mà Bot hành động khác nhau
             let chanceToBet = 0;
             let minAmount = 0;
             let maxAmount = 0;
 
             if (gameState.timeRemaining > 30) {
-                // Giai đoạn đầu: Thăm dò, đặt ít, tỉ lệ thấp
-                chanceToBet = 0.4; // 40% cơ hội đặt mỗi giây
-                minAmount = 500000; // 500k
-                maxAmount = 5000000; // 5m
+                chanceToBet = 0.4; 
+                minAmount = 500000; 
+                maxAmount = 5000000; 
             } else if (gameState.timeRemaining > 10) {
-                // Giai đoạn giữa: Đặt đều tay
-                chanceToBet = 0.8; // 80%
-                minAmount = 2000000; // 2m
-                maxAmount = 20000000; // 20m
+                chanceToBet = 0.8; 
+                minAmount = 2000000; 
+                maxAmount = 20000000; 
             } else {
-                // Giai đoạn cuối (Về bờ): Đặt dồn dập, tiền to
-                chanceToBet = 1.0; // 100% giây nào cũng nhảy
-                minAmount = 10000000; // 10m
-                maxAmount = 100000000; // 100m
+                chanceToBet = 1.0; 
+                minAmount = 10000000; 
+                maxAmount = 100000000; 
             }
 
-            // Xử lý bơm tiền cho TÀI
             if (Math.random() < chanceToBet) {
                 const addTai = randMoney(minAmount, maxAmount);
                 gameState.totalTai += addTai;
             }
 
-            // Xử lý bơm tiền cho XỈU
             if (Math.random() < chanceToBet) {
                 const addXiu = randMoney(minAmount, maxAmount);
                 gameState.totalXiu += addXiu;
             }
 
-            // LOGIC CÂN CỬA: Nếu chênh lệch quá lớn (> 200m), Bot sẽ bơm mạnh vào bên yếu thế
+            // LOGIC CÂN CỬA
             const diff = Math.abs(gameState.totalTai - gameState.totalXiu);
             if (diff > 200000000) {
-                const buffAmount = randMoney(50000000, 100000000); // Bơm thêm 50-100m
+                const buffAmount = randMoney(50000000, 100000000); 
                 if (gameState.totalTai < gameState.totalXiu) gameState.totalTai += buffAmount;
                 else gameState.totalXiu += buffAmount;
             }
@@ -118,8 +112,7 @@ export const handleBet = async (socket, { userId, username, choice, amount }) =>
 const startRolling = async (io) => {
     gameState.status = "ROLLING";
     
-    // Thuật toán chỉnh cầu (nếu muốn bịp): Có thể can thiệp kết quả tại đây
-    // Hiện tại để random xanh chín
+    // Thuật toán chỉnh cầu :ramdom
     const d1 = Math.floor(Math.random() * 6) + 1;
     const d2 = Math.floor(Math.random() * 6) + 1;
     const d3 = Math.floor(Math.random() * 6) + 1;
@@ -160,7 +153,6 @@ const startNewRound = () => {
     gameState.timeRemaining = 50;
     gameState.roundId++;
     gameState.result = "";
-    // Ván mới set luôn tiền nền cho uy tín (300m - 500m)
     gameState.totalTai = randMoney(300000000, 500000000); 
     gameState.totalXiu = randMoney(300000000, 500000000);
     currentBets = []; 

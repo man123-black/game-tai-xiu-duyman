@@ -5,13 +5,13 @@ import "../assets/auth.css";
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); // Thêm state cho ô nhập lại
+  const [confirmPassword, setConfirmPassword] = useState(""); 
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // 1. KIỂM TRA MẬT KHẨU CÓ KHỚP KHÔNG
+    // KIỂM TRA MẬT KHẨU 
     if (password !== confirmPassword) {
         return alert("❌ Mật khẩu xác nhận không khớp! Vui lòng kiểm tra lại.");
     }
@@ -20,7 +20,6 @@ const Register = () => {
       const res = await fetch("https://game-tai-xiu-duyman.onrender.com/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // Chỉ gửi username và password lên server (không cần gửi confirmPassword)
         body: JSON.stringify({ username, password }),
       });
 
@@ -30,7 +29,7 @@ const Register = () => {
         alert("✅ Đăng ký thành công! Hãy đăng nhập ngay.");
         navigate("/"); 
       } else {
-        // Hiện lỗi từ server (ví dụ: Tên đã tồn tại)
+        // Hiện lỗi từ server 
         alert("❌ " + data.message); 
       }
     } catch (error) {
@@ -44,17 +43,15 @@ const Register = () => {
         <h1 className="auth-title">Đăng Ký Vip</h1>
         <form onSubmit={handleRegister}>
           
-          {/* Ô Nhập Tên */}
           <input
             className="auth-input"
             type="text"
             placeholder="Tên tài khoản"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            required // Bắt buộc nhập
+            required 
           />
 
-          {/* Ô Nhập Mật Khẩu */}
           <input
             className="auth-input"
             type="password"
@@ -64,7 +61,6 @@ const Register = () => {
             required
           />
 
-          {/* Ô Nhập Lại Mật Khẩu (Mới thêm) */}
           <input
             className="auth-input"
             type="password"

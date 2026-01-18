@@ -1,10 +1,9 @@
-/* src/assets/styles.css */
 :root {
-    --primary-color: #ffd700; /* Vàng kim */
+    --primary-color: #ffd700; 
     --accent-red: #ff4d4d;
     --accent-blue: #00ccff;
-    --bg-dark: #0f172a; /* Xanh than đậm (thay vì đen sì) */
-    --glass-bg: rgba(20, 30, 48, 0.9); /* Hiệu ứng kính tối */
+    --bg-dark: #0f172a; 
+    --glass-bg: rgba(20, 30, 48, 0.9); 
     --header-height: 60px;
     --chat-width-pc: 320px;
 }
@@ -19,7 +18,6 @@
 html, body {
     width: 100%; height: 100%;
     overflow: hidden;
-    /* NỀN CHÍNH: Xanh than + Hiệu ứng tỏa sáng nhẹ ở giữa */
     background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
     color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -32,15 +30,11 @@ html, body {
     position: relative;
 }
 
-/* =========================================================
-   1. HEADER (SANG TRỌNG HƠN)
-   ========================================================= */
-.game-header {
+.game-header { /* HEADER */
     height: var(--header-height);
     flex-shrink: 0;
     display: flex; justify-content: space-between; align-items: center;
     padding: 0 20px;
-    /* Gradient đen bóng */
     background: linear-gradient(180deg, #333 0%, #111 100%);
     border-bottom: 2px solid var(--primary-color);
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
@@ -55,10 +49,7 @@ html, body {
 }
 .gold-text { color: var(--primary-color); font-weight: bold; font-size: 14px; }
 
-/* =========================================================
-   2. LAYOUT CHÍNH
-   ========================================================= */
-.main-layout {
+.main-layout { /*LAYOUT */
     flex: 1;
     display: flex;
     padding: 15px;
@@ -67,7 +58,7 @@ html, body {
     overflow: hidden;
 }
 
-/* KHUNG GAME (TRÁI) */
+/* KHUNG GAME */
 .game-section {
     flex: 1;
     display: flex; flex-direction: column;
@@ -76,11 +67,11 @@ html, body {
 }
 
 .game-board {
-    /* Nền bàn cược: Xanh rêu đậm hoặc Xanh than pha texture */
+    /* Nền bàn cược */
     background: 
-        linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), /* Lớp phủ tối */
-        url('https://www.transparenttextures.com/patterns/black-felt.png'), /* Texture vải nỉ */
-        radial-gradient(circle at center, #2c3e50 0%, #000 100%); /* Màu nền */
+        linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+        url('https://www.transparenttextures.com/patterns/black-felt.png'), 
+        radial-gradient(circle at center, #2c3e50 0%, #000 100%); /* Nền chính */
     
     border: 3px solid #5c4e32;
     border-radius: 15px;
@@ -93,11 +84,10 @@ html, body {
     position: relative;
 }
 
-/* KHUNG CHAT (PHẢI) - SỬA LỖI GIAO DIỆN */
+/* KHUNG CHAT */
 .chat-container {
     width: var(--chat-width-pc);
     flex-shrink: 0;
-    /* Màu kính tối sang trọng */
     background: rgba(15, 23, 42, 0.95);
     border: 1px solid var(--primary-color);
     border-radius: 12px;
@@ -106,9 +96,8 @@ html, body {
     box-shadow: -5px 0 15px rgba(0,0,0,0.5);
 }
 
-/* =========================================================
-   3. BÀN CƯỢC & Ô CƯỢC (TÀI / XỈU)
-   ========================================================= */
+
+/* BÀN CƯỢC & Ô CƯỢC */
 .bet-section {
     flex: 1;
     display: flex; justify-content: center; align-items: center;
@@ -124,7 +113,6 @@ html, body {
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     cursor: pointer;
-    /* Viền phát sáng nhẹ */
     border: 4px solid rgba(255, 215, 0, 0.1);
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     position: relative;
@@ -132,7 +120,6 @@ html, body {
     backdrop-filter: blur(5px);
 }
 
-/* Màu Gradient đẹp hơn */
 .bet-tai { background: linear-gradient(135deg, #8b0000 0%, #3f0000 100%); }
 .bet-xiu { background: linear-gradient(135deg, #004e92 0%, #000428 100%); }
 
@@ -154,7 +141,6 @@ html, body {
     min-width: 140px; min-height: 140px;
     
     border-radius: 50%;
-    /* Viền vàng kim loại */
     border: 6px solid #b8860b;
     outline: 2px solid #ffd700;
     
@@ -174,12 +160,12 @@ html, body {
     filter: drop-shadow(0 0 5px #000);
 }
 
-/* XÚC XẮC & ANIMATION */
+/* XÚC XẮC */
 .dice-in-circle { display: flex; flex-wrap: wrap; justify-content: center; align-content: center; width: 60%; height: 60%; gap: 5px; }
 .die { width: 45%; height: 45%; background: linear-gradient(135deg, #fff, #ccc); border-radius: 12%; display: grid; padding: 10%; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); box-shadow: inset -2px -2px 5px rgba(0,0,0,0.3), 2px 2px 5px rgba(0,0,0,0.5); }
 .pip { background: #111; border-radius: 50%; box-shadow: inset 1px 1px 1px rgba(0,0,0,0.5); }
 .die[data-value="1"] .pip, .die[data-value="4"] .pip { background: #d00; }
-/* Vị trí chấm xúc xắc giữ nguyên */
+
 .die[data-value="1"] { display: flex; align-items: center; justify-content: center; } .die[data-value="1"] .pip { width: 50%; height: 50%; }
 .die[data-value="2"] .pip:nth-child(1) { grid-area: 1/3; } .die[data-value="2"] .pip:nth-child(2) { grid-area: 3/1; }
 .die[data-value="3"] .pip:nth-child(1) { grid-area: 1/3; } .die[data-value="3"] .pip:nth-child(2) { grid-area: 2/2; } .die[data-value="3"] .pip:nth-child(3) { grid-area: 3/1; }
@@ -198,24 +184,22 @@ html, body {
 @keyframes floatUp { 0% { opacity: 0; bottom: 0; } 100% { opacity: 0; bottom: 80px; } }
 @keyframes floatDown { 0% { opacity: 0; bottom: 0; } 100% { opacity: 0; bottom: -60px; } }
 
-/* =========================================================
-   4. CHAT BOX - PHIÊN BẢN PRO (Tối ưu diện tích & Thẩm mỹ)
-   ========================================================= */
+/* CHAT BOX 
 
 /* Khung tổng thể */
 .chat-container {
     width: var(--chat-width-pc);
     flex-shrink: 0;
-    background: rgba(10, 15, 30, 0.95); /* Nền tối sâu hơn */
+    background: rgba(10, 15, 30, 0.95); 
     border: 1px solid #463b25; 
     border-radius: 12px;
     display: flex; flex-direction: column;
     height: 100%;
     box-shadow: -5px 0 20px rgba(0,0,0,0.8);
-    overflow: hidden; /* Bo tròn góc */
+    overflow: hidden; 
 }
 
-/* Header Chat */
+/* Phần tiêu đề */
 .chat-header {
     background: linear-gradient(90deg, #1f1c18, #3e2b14);
     padding: 12px;
@@ -232,19 +216,19 @@ html, body {
 /* Phần nội dung tin nhắn */
 .chat-body {
     flex: 1;
-    overflow-y: auto; /* Cuộn dọc */
+    overflow-y: auto; 
     overflow-x: hidden;
     padding: 10px;
     background: rgba(0,0,0,0.2);
     font-size: 13px;
     display: flex;
     flex-direction: column;
-    gap: 6px; /* Khoảng cách giữa các tin nhắn */
+    gap: 6px; 
 }
 
-/* --- TÙY CHỈNH THANH CUỘN (SCROLLBAR) --- */
+/* Thanh cuộn tùy chỉnh */
 .chat-body::-webkit-scrollbar {
-    width: 6px; /* Mảnh hơn */
+    width: 6px;
 }
 .chat-body::-webkit-scrollbar-track {
     background: #0f172a; 
@@ -254,24 +238,22 @@ html, body {
     border-radius: 10px;
 }
 .chat-body::-webkit-scrollbar-thumb:hover {
-    background: #ffd700; /* Hover vào hiện màu vàng */
+    background: #ffd700; 
 }
-
-/* Dòng tin nhắn (Gọn gàng hơn) */
+/* Mỗi dòng chat */
 .chat-line {
     padding: 5px 8px;
     border-radius: 6px;
     line-height: 1.4;
     word-wrap: break-word;
-    /* Hiệu ứng nền mờ nhẹ thay vì đóng khung cứng */
     background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
     transition: background 0.2s;
-    border-left: 2px solid transparent; /* Chuẩn bị sẵn viền */
+    border-left: 2px solid transparent; 
 }
 
 .chat-line:hover {
-    background: rgba(255, 255, 255, 0.08); /* Sáng lên khi di chuột vào */
-    border-left: 2px solid #ffd700; /* Hiện viền vàng khi hover */
+    background: rgba(255, 255, 255, 0.08); 
+    border-left: 2px solid #ffd700; 
 }
 
 /* Tên người chơi */
@@ -282,14 +264,13 @@ html, body {
     cursor: pointer;
 }
 .chat-user:hover { text-decoration: underline; }
-
-/* Nội dung chat */
+/* Nội dung tin nhắn */
 .chat-content {
-    color: #e0e0e0; /* Màu trắng ngà cho dễ đọc */
+    color: #e0e0e0; 
     font-weight: 400;
 }
 
-/* Khu vực nhập liệu (Input) */
+/* Khu vực nhập tin nhắn */
 .chat-input-area {
     display: flex; 
     padding: 10px;
@@ -320,7 +301,6 @@ html, body {
     padding: 8px 16px;
     border-radius: 5px; 
     border: none;
-    /* Gradient đỏ đẹp hơn */
     background: linear-gradient(145deg, #d9534f, #b91c1c);
     color: white; 
     font-weight: bold; 
@@ -346,7 +326,6 @@ html, body {
     .chat-input-area button { padding: 6px 12px; font-size: 10px; }
 }
 
-/* CONTROLS (CHIP + HISTORY) */
 .controls-area { margin-top: auto; display: flex; flex-direction: column; gap: 10px; width: 100%; padding-top: 10px; }
 .chip-container { display: flex; justify-content: center; gap: 10px; }
 .chip-btn { width: 55px; height: 55px; border-radius: 50%; border: 2px solid #ffd700; background: rgba(0,0,0,0.5); color: #ffd700; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: 0.2s; }
@@ -357,9 +336,7 @@ html, body {
 .dot-tai { background: #d90000; box-shadow: 0 0 5px #d90000; } 
 .dot-xiu { background: #0066cc; box-shadow: 0 0 5px #0066cc; }
 
-/* =========================================================
-   5. MOBILE FIX (XOAY NGANG)
-   ========================================================= */
+/* --- MOBILE LAYOUT FIX --- */
 @media screen and (orientation: portrait) and (max-width: 1024px) {
     body { background: #000; }
     .game-container {
@@ -392,14 +369,14 @@ html, body {
 .chat-translate {
     display: block;
     font-size: 11px;
-    color: #888; /* Màu xám nhạt */
+    color: #888; 
     font-style: italic;
     margin-top: 3px;
     padding-top: 3px;
     border-top: 1px dashed rgba(255,255,255,0.1);
 }
 
-/* Hiệu ứng loading khi đang dịch */
+/* Dịch */
 .translating {
     animation: blink 1s infinite;
 }

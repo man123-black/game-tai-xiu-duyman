@@ -1,4 +1,3 @@
-/* src/components/dice.css */
 .dice-container {
   display: flex;
   gap: 20px;
@@ -50,7 +49,6 @@
 
 .die[data-value="6"] { grid-template-areas: "a . c" "e . f" "d . b"; }
 
-/* Hiệu ứng rung khi quay */
 .shaking {
   animation: shake 0.5s infinite;
 }
