@@ -10,9 +10,15 @@ const BetBoard = ({ currentChip, setChip }) => {
     }
   };
 
+  const formatChipName = (chip) => {
+    if (chip >= 1000000) {
+      return (chip / 1000000) + 'M'; 
+    }
+    return (chip / 1000) + 'K'; 
+  };
+
   return (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {/* Nút chọn mức cược */}
       <div className="chip-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px' }}>
          {chips.map(chip => (
            <button 
@@ -20,24 +26,22 @@ const BetBoard = ({ currentChip, setChip }) => {
              onClick={() => setChip(chip)}
              className={`chip-btn ${currentChip === chip ? 'active' : ''}`}
            >
-             {chip >= 1000000 ? (chip/1000000) + 'M' : (chip/1000) + 'k'}
+             {formatChipName(chip)}
            </button>
          ))}
 
-         {/* Nút ALL IN */}
          <button 
             onClick={handleAllIn}
-            className={`chip-btn ${currentChip > 10000000 ? 'active' : ''}`}
+            className="chip-btn" 
+            style={{ background: currentChip > 500000000 ? '#ffd700' : '', color: currentChip > 500000000 ? '#000' : '' }}
          >
-           ALL
+            ALL
          </button>
       </div>
 
-      {/* Hiển thị mức cược */}
       <div style={{color: '#aaa', fontSize: '12px', marginTop: '10px', marginBottom: '10px'}}>
-          Mức cược: <span style={{color: '#ffd700', fontWeight: 'bold'}}>{currentChip.toLocaleString()}</span>
+          Mức cược: <span style={{color: '#ffd700', fontWeight: 'bold'}}>{currentChip.toLocaleString()}</span> VNĐ
       </div>
-
     </div>
   );
 };
