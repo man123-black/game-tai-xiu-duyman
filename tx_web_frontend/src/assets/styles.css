@@ -54,29 +54,26 @@ html, body {
   60% { color: #00ffff; text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
   80% { color: #ff00ff; text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; }
 }
-
-/* --- HIỆU ỨNG TIỀN BAY CHUẨN --- */
+/* TIỀN BAY */
 .money-float { 
     position: absolute; 
     left: 50%; 
-    top: 50%; /* Xuất hiện ngay giữa ô cược */
+    top: 50%; 
     transform: translate(-50%, -50%); 
     font-weight: 900; 
-    font-size: 32px; /* Tăng kích thước cho dễ nhìn */
+    font-size: 32px;
     white-space: nowrap; 
     text-shadow: 2px 2px 10px rgba(0,0,0,1); 
-    z-index: 1000; /* Nằm trên cùng */
+    z-index: 1000;
     pointer-events: none; 
     opacity: 0;
 }
 
-/* THẮNG: Hiện xanh và bay vút lên */
 .float-win { 
     color: #39ff14 !important;
     animation: moneyFlyUp 2.5s ease-out forwards; 
 }
 
-/* THUA: Hiện đỏ và rơi xuống */
 .float-loss { 
     color: #ff3333 !important; 
     animation: moneyFlyDown 2.5s ease-out forwards; 
@@ -230,7 +227,6 @@ html, body {
     filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
 }
 
-/* Màu Neon đỏ cho TÀI */
 .result-tai {
     color: #ff4d4d;
     text-shadow: 
@@ -241,7 +237,6 @@ html, body {
     animation: resultEnter 0.4s ease-out;
 }
 
-/* Màu Neon xanh cho XỈU */
 .result-xiu {
     color: #00ccff;
     text-shadow: 
