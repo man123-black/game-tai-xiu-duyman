@@ -55,6 +55,47 @@ html, body {
   80% { color: #ff00ff; text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; }
 }
 
+/* --- HIỆU ỨNG TIỀN BAY CHUẨN --- */
+.money-float { 
+    position: absolute; 
+    left: 50%; 
+    top: 50%; /* Xuất hiện ngay giữa ô cược */
+    transform: translate(-50%, -50%); 
+    font-weight: 900; 
+    font-size: 32px; /* Tăng kích thước cho dễ nhìn */
+    white-space: nowrap; 
+    text-shadow: 2px 2px 10px rgba(0,0,0,1); 
+    z-index: 1000; /* Nằm trên cùng */
+    pointer-events: none; 
+    opacity: 0;
+}
+
+/* THẮNG: Hiện xanh và bay vút lên */
+.float-win { 
+    color: #39ff14 !important;
+    animation: moneyFlyUp 2.5s ease-out forwards; 
+}
+
+/* THUA: Hiện đỏ và rơi xuống */
+.float-loss { 
+    color: #ff3333 !important; 
+    animation: moneyFlyDown 2.5s ease-out forwards; 
+}
+
+@keyframes moneyFlyUp { 
+    0% { opacity: 0; transform: translate(-50%, 0); } 
+    15% { opacity: 1; transform: translate(-50%, -60px); } 
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%, -150px); } 
+}
+
+@keyframes moneyFlyDown { 
+    0% { opacity: 0; transform: translate(-50%, 0); } 
+    15% { opacity: 1; transform: translate(-50%, 40px); } 
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%, 120px); } 
+}
+
 .neon-text { 
     font-size: 28px; 
     font-weight: 900; 
@@ -171,7 +212,6 @@ html, body {
 .timer-text { font-size: clamp(4rem, 10vh, 7rem); font-weight: bold; color: #fff; text-shadow: 0 0 20px #ff0000; }
 
 /* KẾT QUẢ */
-/* --- KẾT QUẢ CHỮ (Đã chỉnh kích thước và Neon) --- */
 .result-floating {
     position: absolute; 
     bottom: -70px; 
@@ -179,14 +219,13 @@ html, body {
     transform: translateX(-50%);
     width: 100%; 
     text-align: center;
-    font-size: 32px; /* Giảm từ 42px xuống 32px cho vừa vặn */
+    font-size: 32px;
     font-weight: 900; 
     text-transform: uppercase;
     z-index: 50; 
     pointer-events: none;
     letter-spacing: 1px;
     
-    /* Hiệu ứng mượt khi hiện */
     transition: all 0.3s ease-in-out;
     filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
 }
@@ -194,7 +233,6 @@ html, body {
 /* Màu Neon đỏ cho TÀI */
 .result-tai {
     color: #ff4d4d;
-    /* Tăng nhiều lớp bóng để thấy rõ màu neon */
     text-shadow: 
         0 0 5px #fff,
         0 0 10px #ff4d4d, 
@@ -206,7 +244,6 @@ html, body {
 /* Màu Neon xanh cho XỈU */
 .result-xiu {
     color: #00ccff;
-    /* Tăng nhiều lớp bóng để thấy rõ màu neon */
     text-shadow: 
         0 0 5px #fff,
         0 0 10px #00ccff, 
