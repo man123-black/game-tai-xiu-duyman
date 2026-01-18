@@ -184,10 +184,11 @@ const Game = () => {
                     {/* VÒNG TRÒN TRUNG TÂM */}
                     <div className="center-plate">
                         {renderCenterContent()}
-                        <div className="result-floating" style={{ opacity: gameState.status === "COMPLETED" ? 1 : 0 }}>
+                        <div className={`result-floating ${gameState.result === "TAI" ? "result-tai" : "result-xiu"}`} 
+                            style={{ opacity: gameState.status === "COMPLETED" ? 1 : 0 }}>
                             {gameState.result && (
                                 <>
-                                    {gameState.dices.reduce((a,b)=>a+b,0)} - <span style={{color: gameState.result === "TAI" ? '#ff4d4d' : '#00ccff'}}>{gameState.result}</span>
+                                    {gameState.dices.reduce((a,b)=>a+b,0)} - <span>{gameState.result}</span>
                                 </>
                             )}
                         </div>
