@@ -32,10 +32,9 @@ const Login = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       
-      // Lưu thông tin tạm thời và vào game
       localStorage.setItem("user", JSON.stringify({
         username: user.displayName,
-        balance: 50000 // Số dư mặc định cho lính mới
+        balance: 50000 
       }));
       
       alert("Chào mừng đại gia " + user.displayName + "!");
@@ -114,7 +113,7 @@ const Login = () => {
           <p style={{ color: '#888', fontSize: '12px', marginBottom: '15px' }}>Hoặc đăng nhập bằng</p>
           
           <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
-              {/* Sửa lại nút Facebook */}
+            {/* Nút Facebook */}
             <button 
                 type="button"
                 style={{
@@ -123,12 +122,12 @@ const Login = () => {
                     fontSize: '13px', display: 'flex', alignItems: 'center',
                     gap: '8px', fontWeight: 'bold'
                 }}
-                onClick={handleFacebookLogin} // THAY alert BẰNG HÀM NÀY
+                onClick={handleFacebookLogin}
             >
                 <span style={{fontSize: '16px'}}>f</span> Facebook
             </button>
 
-            {/* Sửa lại nút Google */}
+            {/* Nút Google */}
             <button 
                 type="button"
                 style={{
@@ -137,14 +136,11 @@ const Login = () => {
                     fontSize: '13px', display: 'flex', alignItems: 'center',
                     gap: '8px', fontWeight: 'bold', boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
                 }}
-                onClick={handleGoogleLogin} // THAY alert BẰNG HÀM NÀY
+                onClick={handleGoogleLogin}
             >
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="16" alt="google" />
                 Google
             </button>
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="16" alt="google" />
-                Google
-              </button>
           </div>
         </div>
 
