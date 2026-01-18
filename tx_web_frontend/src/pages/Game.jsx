@@ -42,21 +42,22 @@ const Game = () => {
     
     socket.on("game-tick", (data) => {
         setGameState(prev => {
-            
             if (data.status === "BETTING" && prev.status !== "BETTING") {
                 setMyBet({ TAI: 0, XIU: 0 }); 
                 setResultEffect({ TAI: null, XIU: null }); 
             }
 
             if (prev.status !== "COMPLETED" && data.status === "COMPLETED") {
-                const result = data.result; // "TAI" hoặc "XIU"
+                const result = data.result; 
                 setResultEffect(prevEffect => {
-                    const newEffect = { ...prevEffect };
+                    const newEffect = { ...prevEffect }; 
                     if (result === "TAI" && myBet.XIU > 0) {
                         newEffect.XIU = { type: 'LOSS', amount: myBet.XIU };
+                        setTimeout(() => setResultEffect(p => ({...p, XIU: null})), 3000);
                     }
                     if (result === "XIU" && myBet.TAI > 0) {
                         newEffect.TAI = { type: 'LOSS', amount: myBet.TAI };
+                        setTimeout(() => setResultEffect(p => ({...p, TAI: null})), 3000);
                     }
                     return newEffect;
                 });
@@ -67,9 +68,24 @@ const Game = () => {
         });
     });
     
+    // Xử lý hiệu ứng THẮNG 
     socket.on("win-money", (data) => {
         playSound("win");
         setMyBalance(prev => prev + data.amount); 
+        
+        setResultEffect(prev => {
+            const currentResult = gameState.result; 
+            if (!currentResult) return prev;
+            
+            const newEffect = { ...prev, [currentResult]: { type: 'WIN', amount: data.amount } };
+            
+            setTimeout(() => {
+                setResultEffect(p => ({ ...p, [currentResult]: null }));
+            }, 3000);
+            
+            return newEffect;
+        });
+
         fetchUserInfo(); 
     });
 
@@ -90,26 +106,12 @@ const Game = () => {
       socket.off("bet-success");
       socket.off("bet-error");
     };
-  }, [myBet]);
-
-  useEffect(() => {
-     const handleWin = (data) => {
-        if (gameState.result) {
-            setResultEffect(prev => ({
-                ...prev,
-                [gameState.result]: { type: 'WIN', amount: data.amount }
-            }));
-        }
-     };
-     socket.on("win-money", handleWin);
-     return () => socket.off("win-money", handleWin);
-  }, [gameState.result]);
+  }, [myBet, gameState.result]); 
 
   const handleBet = (choice) => {
       if (gameState.status !== "BETTING") return;
       if (selectedChip > myBalance) return alert("Không đủ tiền!");
       
-      // Lưu lại số tiền cược
       setMyBet(prev => ({
           ...prev,
           [choice]: prev[choice] + selectedChip
@@ -141,17 +143,16 @@ const Game = () => {
       }
   };
 
-  // Đèn
   const isTaiWin = gameState.status === "COMPLETED" && gameState.result === "TAI";
   const isXiuWin = gameState.status === "COMPLETED" && gameState.result === "XIU";
 
   return (
     <div className="game-container">
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 20px', background: 'rgba(0,0,0,0.9)', borderBottom: '1px solid #333', flexShrink: 0, alignItems: 'center' }}>
-        <div className="neon-text" style={{ fontSize: '24px', fontWeight: 'bold' }}>DUYMAN</div>
+      <div className="game-header">
+        <div className="neon-text">DUYMAN</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-            <div className="gold-text" style={{ fontSize: '16px', fontWeight: 'bold' }}>
+            <div className="gold-text">
               👤 {localUser.username} | 💰 {myBalance.toLocaleString()} VNĐ
             </div>
             <button onClick={handleLogout} style={{ background: '#d9534f', color: 'white', border: 'none', padding: '5px 15px', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' }}>THOÁT</button>
@@ -161,7 +162,6 @@ const Game = () => {
       <div className="main-layout">
           <div className="game-section">
             <div className="game-board">
-                
                 <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center', flex: 1}}>
                     
                     {/* CỬA TÀI */}
@@ -171,7 +171,7 @@ const Game = () => {
                     >
                         <h1 className="gold-text">TÀI</h1>
                         <p>Tổng: {gameState.totalTai.toLocaleString()}</p>
-                        {myBet.TAI > 0 && <div style={{fontSize: '12px', color: '#ff0', marginTop: '5px'}}>Cược: {myBet.TAI.toLocaleString()}</div>}
+                        {myBet.TAI > 0 && <div className="my-bet-info">Cược: {myBet.TAI.toLocaleString()}</div>}
 
                         {/* HIỆU ỨNG TIỀN BAY */}
                         {resultEffect.TAI && (
@@ -184,16 +184,10 @@ const Game = () => {
                     {/* VÒNG TRÒN TRUNG TÂM */}
                     <div className="center-plate">
                         {renderCenterContent()}
-                        
-                        {/* Kết quả chữ */}
-                        <div className="neon-text" style={{
-                            position: 'absolute', bottom: '-60px', left: '50%', transform: 'translateX(-50%)',
-                            width: '300px', textAlign: 'center', fontSize: '4vh', fontWeight: 'bold',
-                            opacity: gameState.status === "COMPLETED" ? 1 : 0, transition: 'opacity 0.3s', pointerEvents: 'none'
-                        }}>
+                        <div className="result-floating" style={{ opacity: gameState.status === "COMPLETED" ? 1 : 0 }}>
                             {gameState.result && (
                                 <>
-                                    {gameState.dices.reduce((a,b)=>a+b,0)} - <span style={{color: gameState.result === "TAI" ? 'red' : 'cyan'}}>{gameState.result}</span>
+                                    {gameState.dices.reduce((a,b)=>a+b,0)} - <span style={{color: gameState.result === "TAI" ? '#ff4d4d' : '#00ccff'}}>{gameState.result}</span>
                                 </>
                             )}
                         </div>
@@ -206,7 +200,7 @@ const Game = () => {
                     >
                         <h1 className="gold-text">XỈU</h1>
                         <p>Tổng: {gameState.totalXiu.toLocaleString()}</p>
-                        {myBet.XIU > 0 && <div style={{fontSize: '12px', color: '#ff0', marginTop: '5px'}}>Cược: {myBet.XIU.toLocaleString()}</div>}
+                        {myBet.XIU > 0 && <div className="my-bet-info">Cược: {myBet.XIU.toLocaleString()}</div>}
 
                         {/* HIỆU ỨNG TIỀN BAY */}
                         {resultEffect.XIU && (
