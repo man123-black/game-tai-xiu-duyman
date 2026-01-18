@@ -1,7 +1,7 @@
 import React from 'react';
 
 const BetBoard = ({ currentChip, setChip }) => {
-  const chips = [1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000];
+  const chips = [1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000, 500000000];
 
   const handleAllIn = () => {
     const user = JSON.parse(localStorage.getItem("user"));
