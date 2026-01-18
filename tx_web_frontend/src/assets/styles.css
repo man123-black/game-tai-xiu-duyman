@@ -379,7 +379,7 @@ html, body {
 .money-float { 
     position: absolute; 
     left: 50%; 
-    top: 40%; 
+    top: 50%; 
     transform: translate(-50%, -50%); 
     font-weight: 900; 
     font-size: clamp(24px, 5vh, 32px); 
