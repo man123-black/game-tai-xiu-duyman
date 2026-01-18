@@ -185,13 +185,13 @@ const Game = () => {
                     <div className="center-plate">
                         {renderCenterContent()}
                         <div className={`result-floating ${gameState.result === "TAI" ? "result-tai" : "result-xiu"}`} 
-                            style={{ opacity: gameState.status === "COMPLETED" ? 1 : 0 }}>
-                            {gameState.result && (
-                                <>
-                                    {gameState.dices.reduce((a,b)=>a+b,0)} - <span>{gameState.result}</span>
-                                </>
-                            )}
-                        </div>
+                          style={{ opacity: gameState.status === "COMPLETED" ? 1 : 0 }}>
+                          {gameState.result && (
+                              <>
+                                  {gameState.dices.reduce((a, b) => a + b, 0)} - <span>{gameState.result}</span>
+                              </>
+                          )}
+                      </div>
                     </div>
 
                     {/* CỬA XỈU */}

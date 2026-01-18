@@ -171,39 +171,53 @@ html, body {
 .timer-text { font-size: clamp(4rem, 10vh, 7rem); font-weight: bold; color: #fff; text-shadow: 0 0 20px #ff0000; }
 
 /* KẾT QUẢ */
+/* --- KẾT QUẢ CHỮ (Đã chỉnh kích thước và Neon) --- */
 .result-floating {
     position: absolute; 
-    bottom: -80px;
+    bottom: -70px; 
     left: 50%; 
     transform: translateX(-50%);
     width: 100%; 
     text-align: center;
-    font-size: 42px; 
+    font-size: 32px; /* Giảm từ 42px xuống 32px cho vừa vặn */
     font-weight: 900; 
     text-transform: uppercase;
     z-index: 50; 
     pointer-events: none;
+    letter-spacing: 1px;
     
-    filter: drop-shadow(0 0 15px rgba(0,0,0,1));
-    letter-spacing: 2px;
-    
-    animation: resultEnter 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    transition: opacity 0.3s ease;
+    /* Hiệu ứng mượt khi hiện */
+    transition: all 0.3s ease-in-out;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
+}
+
+/* Màu Neon đỏ cho TÀI */
+.result-tai {
+    color: #ff4d4d;
+    /* Tăng nhiều lớp bóng để thấy rõ màu neon */
+    text-shadow: 
+        0 0 5px #fff,
+        0 0 10px #ff4d4d, 
+        0 0 20px #ff4d4d, 
+        0 0 40px #ff0000;
+    animation: resultEnter 0.4s ease-out;
+}
+
+/* Màu Neon xanh cho XỈU */
+.result-xiu {
+    color: #00ccff;
+    /* Tăng nhiều lớp bóng để thấy rõ màu neon */
+    text-shadow: 
+        0 0 5px #fff,
+        0 0 10px #00ccff, 
+        0 0 20px #00ccff, 
+        0 0 40px #00ccff;
+    animation: resultEnter 0.4s ease-out;
 }
 
 @keyframes resultEnter {
-    0% { opacity: 0; transform: translate(-50%, 20px) scale(0.5); }
+    0% { opacity: 0; transform: translate(-50%, 10px) scale(0.8); }
     100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
-}
-
-.result-tai {
-    color: #ff4d4d;
-    text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff0000, 0 0 40px #ff0000;
-}
-
-.result-xiu {
-    color: #00ccff;
-    text-shadow: 0 0 10px #00ccff, 0 0 20px #00ccff, 0 0 40px #00ccff;
 }
 
 /* XÚC XẮC */
