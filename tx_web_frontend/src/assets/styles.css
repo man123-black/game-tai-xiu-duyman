@@ -402,6 +402,17 @@ html, body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.5);
     transition: transform 0.1s;
 }
+.chip-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid #ffd700;
+    background: transparent;
+    color: #ffd700;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
 .chat-input-area button:active {
     transform: scale(0.95);

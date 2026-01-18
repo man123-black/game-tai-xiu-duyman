@@ -32,11 +32,10 @@ const BetBoard = ({ currentChip, setChip }) => {
 
          <button 
             onClick={handleAllIn}
-            className="chip-btn" 
-            style={{ background: currentChip > 500000000 ? '#ffd700' : '', color: currentChip > 500000000 ? '#000' : '' }}
-         >
+            className={`chip-btn ${currentChip === (JSON.parse(localStorage.getItem("user"))?.balance || -1) ? 'active' : ''}`}
+          >
             ALL
-         </button>
+          </button>
       </div>
 
       <div style={{color: '#aaa', fontSize: '12px', marginTop: '10px', marginBottom: '10px'}}>
