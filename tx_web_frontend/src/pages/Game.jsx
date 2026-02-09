@@ -150,7 +150,7 @@ const Game = () => {
     <div className="game-container">
       {/* Header */}
       <div className="game-header">
-        <div className="neon-text">DUYMAN</div>
+        <div className="neon-text">KhanhLinh</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <div className="gold-text">
               👤 {localUser.username} | 💰 {myBalance.toLocaleString()} VNĐ
